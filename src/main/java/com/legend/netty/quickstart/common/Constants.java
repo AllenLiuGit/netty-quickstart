@@ -6,4 +6,6 @@ package com.legend.netty.quickstart.common;
 public interface Constants {
     public static final String CORRECT_QUERY_TIME_ORDER = "QUERY TIME ORDER";
     public static final String BAD_QUERY_TIME_ORDER = "BAD ORDER";
+
+    public static final String DOLLAR_DELIMITER = "$_";
 }
