@@ -10,26 +10,35 @@ import io.netty.channel.ChannelHandlerContext;
  * Created by allen on 6/30/16.
  */
 public class TimeClientHandler extends ChannelHandlerAdapter {
-    private final ByteBuf firstMessage;
+    // private final ByteBuf firstMessage;
+    private int counter;
+    private byte[] req;
 
     public TimeClientHandler() {
-        byte[] req = Constants.CORRECT_QUERY_TIME_ORDER.getBytes();
-        firstMessage = Unpooled.buffer(req.length);
-        firstMessage.writeBytes(req);
+        req = (Constants.CORRECT_QUERY_TIME_ORDER + System.getProperty("line.separator")).getBytes();
+        // firstMessage = Unpooled.buffer(req.length);
+        // firstMessage.writeBytes(req);
     }
 
     @Override
     public void channelActive(ChannelHandlerContext channelHandlerContext) {
-        channelHandlerContext.writeAndFlush(firstMessage);
+        // channelHandlerContext.writeAndFlush(firstMessage);
+        ByteBuf message = null;
+        for (int i = 0; i < 100; i++) {
+            message = Unpooled.buffer(req.length);
+            message.writeBytes(req);
+            channelHandlerContext.writeAndFlush(message);
+        }
     }
 
     @Override
     public void channelRead(ChannelHandlerContext channelHandlerContext, Object msg) throws Exception {
-        ByteBuf req = (ByteBuf)msg;
-        byte[] reqBytes = new byte[req.readableBytes()];
-        req.readBytes(reqBytes);
-        String body = new String(reqBytes, "UTF-8");
-        System.out.println("Now is: " + body);
+        // ByteBuf req = (ByteBuf)msg;
+        // byte[] reqBytes = new byte[req.readableBytes()];
+        // req.readBytes(reqBytes);
+        // String body = new String(reqBytes, "UTF-8");
+        String body = (String)msg;
+        System.out.println("Now is: " + body + ", The counter is: " + (++counter));
     }
 
     @Override
