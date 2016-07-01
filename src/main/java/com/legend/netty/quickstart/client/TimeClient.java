@@ -42,6 +42,7 @@ public class TimeClient {
         } finally {
             // 优雅退出,释放NIO线程组
             group.shutdownGracefully();
+            System.out.println("Client shutdown gracefully and release thread group resources gracefully...");
         }
     }
 

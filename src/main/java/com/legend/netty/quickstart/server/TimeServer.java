@@ -25,10 +25,12 @@ public class TimeServer {
             serverBootstrap.group(bossGroup, workerGroup)
                     .channel(NioServerSocketChannel.class)
                     .option(ChannelOption.SO_BACKLOG, 1024)
-                    .childHandler(new ChildChannelHandler());
+                    .childHandler(new ChildChannelHandler()) // 最后绑定I/O事件处理类,处理网络I/O事件
+            ;
 
             // 绑定监听端口,并同步等待绑定操作成功完成
             ChannelFuture channelFuture = serverBootstrap.bind(port).sync();
+            System.out.println("Server startup...");
 
             // 等待服务端监听端口关闭,也即服务器端链路关闭
             channelFuture.channel().closeFuture().sync();
@@ -36,6 +38,7 @@ public class TimeServer {
             // 优雅退出,释放线程池资源
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
+            System.out.println("Server shutdown gracefully and release thread group resources gracefully...");
         }
     }
 
