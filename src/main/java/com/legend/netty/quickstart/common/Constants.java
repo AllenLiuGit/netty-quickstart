@@ -8,4 +8,6 @@ public interface Constants {
     public static final String BAD_QUERY_TIME_ORDER = "BAD ORDER";
 
     public static final String DOLLAR_DELIMITER = "$_";
+
+    public static final String ACCEPTED_USER_NAME = "Allen";
 }
